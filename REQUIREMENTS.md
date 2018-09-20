@@ -1,3 +1,5 @@
+# BingoGen Requirements/Ideas
+
 Slap in a set of 50-100 things.
 
 Using a seed, RNG your way to pull 25 things from the bag and spit out a board.
