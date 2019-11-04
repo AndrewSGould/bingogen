@@ -58,10 +58,10 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Bootstrap](https://getbootstrap.com/)
-* [React](https://dotnet.microsoft.com/apps/aspnet)
-* [.NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/core/whats-new/dotnet-core-3-0)
-* [NodeJS](https://nodejs.org/en/)
+- [Bootstrap](https://getbootstrap.com/)
+- [React](https://dotnet.microsoft.com/apps/aspnet)
+- [.NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/core/whats-new/dotnet-core-3-0)
+- [NodeJS](https://nodejs.org/en/)
 
 ## Contributing
 
@@ -69,11 +69,11 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 
-* **Andrew Scott Gould** - [AndrewSGould](https://github.com/AndrewSGould)
+- **Andrew Scott Gould** - [AndrewSGould](https://github.com/AndrewSGould)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -83,6 +83,7 @@ This project is licensed under the GNU General Public License - see the [LICENSE
 
 ## Acknowledgments
 
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) - For a nice Readme template
-* Inspiration
-* etc
+- [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) - For a nice Readme template
+- [CodeBurst](https://codeburst.io/) - For good tutorials
+- [WowZipZipBoomBoomWow](https://www.reddit.com/user/WowZipZipBoomBoomWow) - For the inspiration
+- etc
