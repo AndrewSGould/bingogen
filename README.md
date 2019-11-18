@@ -85,5 +85,5 @@ This project is licensed under the GNU General Public License - see the [LICENSE
 
 - [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) - For a nice Readme template
 - [CodeBurst](https://codeburst.io/) - For good tutorials
-- [WowZipZipBoomBoomWow](https://www.reddit.com/user/WowZipZipBoomBoomWow) - For the inspiration
+- [/u/WowZipZipBoomBoomWow](https://www.reddit.com/user/WowZipZipBoomBoomWow) - For the inspiration
 - etc

@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import Spinner from './Spinner';
 import Images from './Images';
 import Buttons from './Buttons';
-import { API_URL } from './config';
+import { post } from 'axios';
 
 const MINIMUM_PREDICTIONS_NEEDED = 49;
+
+const toastColor = {
+  background: '#505050',
+  text: '#fff'
+};
 
 export class Prediction extends Component {
   static displayName = Prediction.name;
@@ -15,16 +20,46 @@ export class Prediction extends Component {
       currentCount: 0,
       readyColor: 'red',
       uploading: false,
-      images: []
+      image: []
     };
 
     this.incrementCounter = this.incrementCounter.bind(this);
   }
 
-  onChange = e => {
-    const files = Array.from(e.target.files);
-    this.setState({uploading = true});
+  async submit(e) {
+    e.preventDefault();
+
+    this.setState({ uploading: true });
+
+    const url = `https://localhost:5001/imageupload`;
+    const formData = new FormData();
+    formData.append('body', this.state.file);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    };
+    return post(url, formData, config)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
+
+  onChange = e => {
+    this.setState({
+      image: URL.createObjectURL(e.target.files[0]),
+      file: e.target.files[0]
+    });
+  };
+
+  removeImage = () => {
+    this.setState({
+      image: ''
+    });
+  };
 
   incrementCounter() {
     this.setState({ currentCount: this.state.currentCount + 1 });
@@ -34,10 +69,22 @@ export class Prediction extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <h1>Card Creation</h1>
+    const { uploading, image } = this.state;
 
+    const content = () => {
+      switch (true) {
+        case uploading:
+          return <Spinner />;
+        case image.length > 0:
+          return <Images image={image} removeImage={this.removeImage} />;
+        default:
+          return <Buttons onChange={this.onChange} />;
+      }
+    };
+
+    return (
+      <form onSubmit={e => this.submit(e)}>
+        <h1>Card Creation</h1>
         <div>
           <label htmlFor='prediction'>Prediction</label>
           <input type='text' id='prediction' />
@@ -47,13 +94,18 @@ export class Prediction extends Component {
           <span> / 50</span>
         </div>
 
-        <label htmlFor='image'>Image</label>
-        <input type='url' id='image' />
+        <div>
+          <div className='buttons'>{content()}</div>
+        </div>
 
-        <button className='btn btn-primary' onClick={this.incrementCounter}>
+        <button
+          type='submit'
+          className='btn btn-primary'
+          onClick={this.incrementCounter}
+        >
           Add
         </button>
-      </div>
+      </form>
     );
   }
 }

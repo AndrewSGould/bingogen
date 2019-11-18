@@ -5,12 +5,12 @@ import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Prediction } from './components/Prediction';
 
-import './custom.css'
+import './custom.css';
 
 export default class App extends Component {
   static displayName = App.name;
 
-  render () {
+  render() {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
