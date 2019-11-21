@@ -27,11 +27,28 @@ namespace BingoGen.Controllers
     }
 
     [HttpPost("/imageupload")]
-    public string Upload([FromForm]IFormFile image, [FromForm]string prediction)
+    public IActionResult Upload([FromForm]IFormFile image, [FromForm]string predictionText, [FromForm]int difficulty)
     {
-      // TODO: Inject these from a service
-      DotNetEnv.Env.Load("./../.env");
+      // TODO: Santitize input from client
 
+      var prediction = new Prediction
+      {
+        PredictionText = predictionText,
+        Difficulty = difficulty,
+        ImageUri = Upload(image),
+        CreatedBy = "" // TODO: implement this
+      };
+
+      if (predictionsRepository.Add(prediction))
+        return Ok(prediction);
+
+      return BadRequest();
+    }
+
+    private string Upload(IFormFile image)
+    {
+      DotNetEnv.Env.Load("./../.env");
+      // TODO: Inject these from a service
       var account = new Account(
                 System.Environment.GetEnvironmentVariable("CLOUD_NAME"),
                 System.Environment.GetEnvironmentVariable("API_KEY"),
@@ -55,16 +72,7 @@ namespace BingoGen.Controllers
         };
       }
 
-      var uploadResult = cloudinary.Upload(uploadParams);
-
-      SavePrediction(uploadResult.SecureUri.AbsoluteUri);
-
-      return uploadResult.SecureUri.AbsoluteUri;
-    }
-
-    public void SavePrediction(string uri)
-    {
-      // TODO: Save prediction details in the db
+      return cloudinary.Upload(uploadParams).SecureUri.AbsoluteUri;
     }
   }
 }

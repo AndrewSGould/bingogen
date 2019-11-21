@@ -17,6 +17,7 @@ export class Prediction extends Component {
       readyColor: 'red', //TODO: This name sucks
       uploading: false,
       prediction: '',
+      difficulty: 3,
       image: [] // TODO: Image is no longer an array. One at a time
     };
 
@@ -40,7 +41,8 @@ export class Prediction extends Component {
     };
 
     formData.append('image', this.state.file);
-    formData.append('prediction', this.state.prediction);
+    formData.append('predictionText', this.state.prediction);
+    formData.append('difficulty', this.state.difficulty);
 
     return post(url, formData, config)
       .then(response => {
@@ -125,7 +127,11 @@ export class Prediction extends Component {
 
         <div>
           <label htmlFor='difficulty'>Likelihood</label>
-          <select name='difficulty' id='difficulty'>
+          <select
+            name='difficulty'
+            id='difficulty'
+            onChange={e => this.setState({ difficulty: e.target.value })}
+          >
             <option value=''>--How likely is this to happen?--</option>
             <option value='5'>Very Unlikely</option>
             <option value='4'>Unlikely</option>

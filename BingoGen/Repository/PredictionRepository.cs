@@ -34,7 +34,10 @@ namespace BingoGen
         var count = dbConnection.Execute(sql, prediction);
         result = count > 0;
       }
-      catch { }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
 
       return result;
     }
