@@ -12,6 +12,8 @@
     <PackageReference Include="CloudinaryDotNet" Version="1.9.1"/>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3"/>
     <PackageReference Include="DotNetEnv" Version="1.2.0"/>
+    <PackageReference Include="Dapper" Version="2.0.4"/>
+    <PackageReference Include="System.Data.SqlClient" Version="4.7.0"/>
   </ItemGroup>
   <ItemGroup>
     <Content Remove="$(SpaRoot)**"/>

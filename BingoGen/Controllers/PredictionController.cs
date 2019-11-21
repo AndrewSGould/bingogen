@@ -1,5 +1,5 @@
-using System;
 using System.IO;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using CloudinaryDotNet;
@@ -11,11 +11,25 @@ namespace BingoGen.Controllers
   [Route("[controller]")]
   public class PredictionController : ControllerBase
   {
-    [HttpPost("/imageupload")]
-    public string Upload([FromForm]IFormFile body)
-    {
-      var image = body;
+    IRepository<Prediction> predictionsRepository = null;
 
+    public PredictionController()
+    {
+      predictionsRepository = new PredictionsRepository();
+    }
+
+    [HttpGet("/get")]
+    public IActionResult Get()
+    {
+      IList<Prediction> prediction = predictionsRepository.GetAll();
+
+      return Ok(prediction);
+    }
+
+    [HttpPost("/imageupload")]
+    public string Upload([FromForm]IFormFile image, [FromForm]string prediction)
+    {
+      // TODO: Inject these from a service
       DotNetEnv.Env.Load("./../.env");
 
       var account = new Account(
@@ -42,7 +56,15 @@ namespace BingoGen.Controllers
       }
 
       var uploadResult = cloudinary.Upload(uploadParams);
+
+      SavePrediction(uploadResult.SecureUri.AbsoluteUri);
+
       return uploadResult.SecureUri.AbsoluteUri;
+    }
+
+    public void SavePrediction(string uri)
+    {
+      // TODO: Save prediction details in the db
     }
   }
 }

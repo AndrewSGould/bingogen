@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import Spinner from './Spinner';
 import Images from './Images';
 import Buttons from './Buttons';
-import { post } from 'axios';
+import { post, get } from 'axios';
 
+// TODO: Make this number 50, when you do why does the 'than or equal to' not seem to work?
 const MINIMUM_PREDICTIONS_NEEDED = 49;
-
-const toastColor = {
-  background: '#505050',
-  text: '#fff'
-};
 
 export class Prediction extends Component {
   static displayName = Prediction.name;
@@ -18,12 +14,15 @@ export class Prediction extends Component {
     super(props);
     this.state = {
       currentCount: 0,
-      readyColor: 'red',
+      readyColor: 'red', //TODO: This name sucks
       uploading: false,
-      image: []
+      prediction: '',
+      image: [] // TODO: Image is no longer an array. One at a time
     };
 
     this.incrementCounter = this.incrementCounter.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.testGet = this.testGet.bind(this);
   }
 
   async submit(e) {
@@ -31,20 +30,26 @@ export class Prediction extends Component {
 
     this.setState({ uploading: true });
 
+    //TODO: dont hardcode the url
     const url = `https://localhost:5001/imageupload`;
     const formData = new FormData();
-    formData.append('body', this.state.file);
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
       }
     };
+
+    formData.append('image', this.state.file);
+    formData.append('prediction', this.state.prediction);
+
     return post(url, formData, config)
       .then(response => {
         console.log(response);
+        this.setState({ uploading: false });
       })
       .catch(error => {
         console.log(error);
+        this.setState({ uploading: false });
       });
   }
 
@@ -68,7 +73,23 @@ export class Prediction extends Component {
       this.setState({ readyColor: 'green' });
   }
 
+  handleChange(e) {
+    this.setState({ prediction: e.target.value });
+  }
+
+  testGet() {
+    get('https://localhost:5001/get')
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
   render() {
+    // TODO: UI is ugly
+    // TODO: Also create and send difficulty
     const { uploading, image } = this.state;
 
     const content = () => {
@@ -84,19 +105,37 @@ export class Prediction extends Component {
 
     return (
       <form onSubmit={e => this.submit(e)}>
-        <h1>Card Creation</h1>
-        <div>
-          <label htmlFor='prediction'>Prediction</label>
-          <input type='text' id='prediction' />
-          <span style={{ color: this.state.readyColor }}>
-            {this.state.currentCount}
-          </span>
-          <span> / 50</span>
-        </div>
+        <h1>Board Creation</h1>
+
+        <label htmlFor='prediction'>Prediction</label>
+        <input
+          type='text'
+          id='prediction'
+          value={this.state.prediction}
+          onChange={this.handleChange.bind(this)}
+        />
+        <span style={{ color: this.state.readyColor }}>
+          {this.state.currentCount}
+        </span>
+        <span>
+          {' '}
+          / 50 (you must create at least 50 predictions before a board can
+          generate cards)
+        </span>
 
         <div>
-          <div className='buttons'>{content()}</div>
+          <label htmlFor='difficulty'>Likelihood</label>
+          <select name='difficulty' id='difficulty'>
+            <option value=''>--How likely is this to happen?--</option>
+            <option value='5'>Very Unlikely</option>
+            <option value='4'>Unlikely</option>
+            <option value='3'>I don't like to make decisions</option>
+            <option value='2'>Likely</option>
+            <option value='1'>Very Likely</option>
+          </select>
         </div>
+
+        <div className='buttons'>{content()}</div>
 
         <button
           type='submit'
@@ -105,6 +144,12 @@ export class Prediction extends Component {
         >
           Add
         </button>
+
+        <div>
+          <button type='button' onClick={this.testGet}>
+            Test Get
+          </button>
+        </div>
       </form>
     );
   }

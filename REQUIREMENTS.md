@@ -19,36 +19,39 @@ Bonus: Add optional difficulty weights (0-1], defaulting to 0.5 if unspecified, 
 If the minimum difficulty (completion difficulty) of the generated board is far from the desired setting (how far is too far?), regenerate the board. Do the same if the average difficulty is too far off. Or, generate 10 boards in a row and pick the one that most closely matches the desired difficulty.
 
 # Terms
-* Deck - A collection of Bingo Cards
-* Predictions - A square in a Bingo card. Consists of text, an image, and difficulty weight
+
+- Board - A collection of Bingo Cards
+- Card - An individual bingo board
+- Predictions - A square in a Bingo card. Consists of text, an image, and difficulty weight
 
 # Tasks
-* 'Prediction Input Counter' control
-* * Initial state 0 / 50 (50 being the minimum amount of Predics needed to generate a card)
-* * When the number is lower than the threshold, make the left number red
-* * When the number is higher than the threshold, make the left number green
 
-* 'Prediction' control
-* * Alphanumeric only
-* * Each prediction gets assigned to a Card
-* * Each prediction increase the Prediction Input Counter
-* * Maximum Length (based off of how much text we can fit on a card)
-* * Do not allow more than 100 Predics (disable add button?)
+- 'Prediction Input Counter' control
+- - Initial state 0 / 50 (50 being the minimum amount of Predics needed to generate a card)
+- - When the number is lower than the threshold, make the left number red
+- - When the number is higher than the threshold, make the left number green
 
-* Difficulty control
-* * Single-choice control
-* * Values are Very Hard, Hard, Neutral, Easy, Very Easy (debatable)
-* * These difficulties will effect the 'weight' of a card (how hard it is to finish)
+- 'Prediction' control
+- - Alphanumeric only
+- - Each prediction gets assigned to a Card
+- - Each prediction increase the Prediction Input Counter
+- - Maximum Length (based off of how much text we can fit on a card)
+- - Do not allow more than 100 Predics (disable add button?)
 
-* Image uploader control
-* * Allow the user to use images in their bingo board
-* * For now, do not allow upload, only references
-* * Auto-scale any linked images down to the required size
+- Difficulty control
+- - Single-choice control
+- - Values are Very Hard, Hard, Neutral, Easy, Very Easy (debatable)
+- - These difficulties will effect the 'weight' of a card (how hard it is to finish)
 
-* Bingo 'Deck'
-* * Allow creation of the card at any time
-* * * If the card has not met the minimum Predictions, put the card in a 'crowdsourced' state and set it to not active
-* * * If the card has met the minimum predictions, put the card into an active state
-* * * * Allow the user to still allow to put it into a 'crowdsourced' state
-* * * * If a deck is not active, do not allow it to generate cards
-* * * * Once cards are generated, do we allow any more additions? Would throw the difficulty scale off
+- Image uploader control
+- - Allow the user to use images in their bingo board
+- - For now, do not allow upload, only references
+- - Auto-scale any linked images down to the required size
+
+- Bingo 'Board'
+- - Allow creation of the card at any time
+- - - If the card has not met the minimum Predictions, put the card in a 'crowdsourced' state and set it to not active
+- - - If the card has met the minimum predictions, put the card into an active state
+- - - - Allow the user to still allow to put it into a 'crowdsourced' state
+- - - - If a deck is not active, do not allow it to generate cards
+- - - - Once cards are generated, do we allow any more additions? Would throw the difficulty scale off
