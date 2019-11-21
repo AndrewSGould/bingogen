@@ -1,5 +1,6 @@
 using System.IO;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using CloudinaryDotNet;
@@ -11,16 +12,19 @@ namespace BingoGen.Controllers
   [Route("[controller]")]
   public class PredictionController : ControllerBase
   {
+    private readonly ILogger<PredictionController> _logger;
     IRepository<Prediction> predictionsRepository = null;
 
-    public PredictionController()
+    public PredictionController(ILogger<PredictionController> logger)
     {
+      _logger = logger;
       predictionsRepository = new PredictionsRepository();
     }
 
     [HttpGet("/get")]
     public IActionResult Get()
     {
+      _logger.LogInformation("Testing 1, 2, 3...");
       IList<Prediction> prediction = predictionsRepository.GetAll();
 
       return Ok(prediction);
