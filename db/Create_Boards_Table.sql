@@ -1,0 +1,11 @@
+IF OBJECT_ID('dbo.Boards', 'U') IS NOT NULL
+DROP TABLE dbo.Boards
+GO
+
+CREATE TABLE dbo.Boards
+(
+  Id INT NOT NULL IDENTITY PRIMARY KEY,
+  Seed VARCHAR(50) NOT NULL,
+  CreatedBy VARCHAR(50) NOT NULL
+);
+GO

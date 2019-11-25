@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BingoGen", "BingoGen.csproj", "{EFD50B0E-A396-47F1-A757-A854CB8B6E5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BingoGen", "BingoGen.csproj", "{EFD50B0E-A396-47F1-A757-A854CB8B6E5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BingoGenTests", "..\BingoGenTests\BingoGenTests.csproj", "{FAAFEB69-7D9C-4177-B007-5483A49079BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EFD50B0E-A396-47F1-A757-A854CB8B6E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFD50B0E-A396-47F1-A757-A854CB8B6E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFD50B0E-A396-47F1-A757-A854CB8B6E5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAAFEB69-7D9C-4177-B007-5483A49079BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAAFEB69-7D9C-4177-B007-5483A49079BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAAFEB69-7D9C-4177-B007-5483A49079BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAAFEB69-7D9C-4177-B007-5483A49079BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

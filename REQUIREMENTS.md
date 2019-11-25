@@ -50,6 +50,7 @@ If the minimum difficulty (completion difficulty) of the generated board is far 
 
 - Bingo 'Board'
 - - Allow creation of the card at any time
+- - Boards live for 1 year max, allow user to choose board life?
 - - - If the card has not met the minimum Predictions, put the card in a 'crowdsourced' state and set it to not active
 - - - If the card has met the minimum predictions, put the card into an active state
 - - - - Allow the user to still allow to put it into a 'crowdsourced' state

@@ -14,14 +14,13 @@ export class Prediction extends Component {
     super(props);
     this.state = {
       currentCount: 0,
-      readyColor: 'red', //TODO: This name sucks
+      readyColor: 'red', //TODO: This name sucks. Also, reimplement color change when enough predictions have been added
       uploading: false,
       prediction: '',
       difficulty: 3,
-      image: [] // TODO: Image is no longer an array. One at a time
+      image: []
     };
 
-    this.incrementCounter = this.incrementCounter.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.testGet = this.testGet.bind(this);
   }
@@ -40,14 +39,18 @@ export class Prediction extends Component {
       }
     };
 
+    //TODO: when creating first prediction, we need to create a board and use that to keep track of amount of predictions
+
     formData.append('image', this.state.file);
     formData.append('predictionText', this.state.prediction);
     formData.append('difficulty', this.state.difficulty);
 
     return post(url, formData, config)
       .then(response => {
-        console.log(response);
-        this.setState({ uploading: false });
+        this.setState({
+          uploading: false,
+          currentCount: currentCount++
+        });
       })
       .catch(error => {
         console.log(error);
@@ -55,6 +58,7 @@ export class Prediction extends Component {
       });
   }
 
+  // TODO: why does this break with normal function syntax? is it because of `this` scope?
   onChange = e => {
     this.setState({
       image: URL.createObjectURL(e.target.files[0]),
@@ -64,16 +68,9 @@ export class Prediction extends Component {
 
   removeImage = () => {
     this.setState({
-      image: ''
+      image: []
     });
   };
-
-  incrementCounter() {
-    this.setState({ currentCount: this.state.currentCount + 1 });
-
-    if (this.state.currentCount >= MINIMUM_PREDICTIONS_NEEDED)
-      this.setState({ readyColor: 'green' });
-  }
 
   handleChange(e) {
     this.setState({ prediction: e.target.value });
@@ -143,11 +140,7 @@ export class Prediction extends Component {
 
         <div className='buttons'>{content()}</div>
 
-        <button
-          type='submit'
-          className='btn btn-primary'
-          onClick={this.incrementCounter}
-        >
+        <button type='submit' className='btn btn-primary'>
           Add
         </button>
 

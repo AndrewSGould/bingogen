@@ -46,7 +46,7 @@ Give an example
 
 ### And coding style tests
 
-Explain coding style and why
+If you update the schema, you must also update the schema diagram found here (todo: update this).
 
 ```
 Give an example
