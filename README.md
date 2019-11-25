@@ -58,6 +58,7 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
+- [Dapper](https://github.com/StackExchange/Dapper)
 - [Bootstrap](https://getbootstrap.com/)
 - [React](https://dotnet.microsoft.com/apps/aspnet)
 - [.NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/core/whats-new/dotnet-core-3-0)

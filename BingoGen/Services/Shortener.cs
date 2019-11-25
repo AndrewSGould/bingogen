@@ -1,32 +1,50 @@
 using System;
 using System.IO;
+using System.Linq;
 
 namespace BingoGen
 {
   public class ShortenerService
   {
+    private const int MAXIMUM_TIMES_TO_RETRY_SMALL_SEED = 3;
+    private const int TOTAL_TIMES_TO_RETRY_SEED = 5;
     private const string WordDictionary = @"C:\Git\bingogen\BingoGen\Resources\google-10000-english-no-swears.txt";
+    IBoardRepository<Board> boardsRepository = null;
+
+    public ShortenerService()
+    {
+      boardsRepository = new BoardsRepository();
+    }
 
     public string GenerateUniqueShortPhrase()
     {
-      var random = new Random();
-
-
       var rawData = File.ReadAllText(WordDictionary).Split("\n");
+      var seedsTried = 0;
+
+      return FindUniqueShortPhrase(new Random(), rawData, seedsTried);
+    }
+
+    public string FindUniqueShortPhrase(Random random, string[] rawData, int seedsTried)
+    {
+      if (seedsTried >= TOTAL_TIMES_TO_RETRY_SEED)
+        throw new Exception();
+
       var firstRandomWord = rawData[random.Next(0, rawData.Length)];
       var secondRandomWord = rawData[random.Next(0, rawData.Length)];
+      var possibleSeed = UppercaseFirst(firstRandomWord) + UppercaseFirst(secondRandomWord);
 
-      // uppercase the first letter in each word
-      var seed = UppercaseFirst(firstRandomWord) + UppercaseFirst(secondRandomWord);
+      if (seedsTried > MAXIMUM_TIMES_TO_RETRY_SMALL_SEED)
+      {
+        var thirdRandomWord = rawData[random.Next(0, rawData.Length)];
+        possibleSeed += thirdRandomWord;
+      }
 
-      // check to see if what is selected is already a 'Seed'
+      var existingSeeds = boardsRepository.GetExistingBoardSeeds();
 
-      // if it is, regenerate up to 3 times
+      if (existingSeeds.Contains(possibleSeed))
+        FindUniqueShortPhrase(random, rawData, ++seedsTried);
 
-      // if it's still failing, add a third word to the 'Seed'
-
-      // once successful, return the unique seed
-      return "";
+      return possibleSeed;
     }
 
     static string UppercaseFirst(string s)

@@ -20,31 +20,7 @@ namespace BingoGen
     {
       get
       {
-        return config.GetSection("PredictionRepositorySettings").GetValue<string>("DbConnection");
-      }
-    }
-
-    public static string InsertCommand
-    {
-      get
-      {
-        return config.GetSection("PredictionRepositorySettings").GetValue<string>("InsertCommand");
-      }
-    }
-
-    public static string ReadAllCommand
-    {
-      get
-      {
-        return config.GetSection("PredictionRepositorySettings").GetValue<string>("ReadAllCommand");
-      }
-    }
-
-    public static string ReadOneCommand
-    {
-      get
-      {
-        return config.GetSection("PredictionRepositorySettings").GetValue<string>("ReadOneCommand");
+        return config.GetSection("RepositorySettings").GetValue<string>("DbConnection");
       }
     }
   }

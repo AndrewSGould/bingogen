@@ -37,6 +37,7 @@ If the minimum difficulty (completion difficulty) of the generated board is far 
 - - Each prediction increase the Prediction Input Counter
 - - Maximum Length (based off of how much text we can fit on a card)
 - - Do not allow more than 100 Predics (disable add button?)
+- - What if predictions where crowdsourced? Aka, upvote system where the top 100 create the board itself
 
 - Difficulty control
 - - Single-choice control

@@ -7,6 +7,8 @@ namespace BingoGen
     public int Difficulty { get; set; } // The higher the number, the harder it is
     public string ImageUri { get; set; } // required
     public string CreatedBy { get; set; } // No sign-in, so should this just be original author and those invited?
+    public int BoardId { get; set; } // foreign key
+    public int? CardId { get; set; } // foreign key
     //TODO: Something to consider. When guests add predictions, should it weigh those more heavily when generating the card?
   }
 }

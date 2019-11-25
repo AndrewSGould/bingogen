@@ -3,25 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace BingoGen
 {
   public class PredictionsRepository : IRepository<Prediction>
   {
-    private IDbConnection dbConnection = null;
+    private IDbConnection conn = null;
 
     public PredictionsRepository()
     {
-      dbConnection = new SqlConnection(ConfigReader.ConnectionString);
-    }
-
-    public List<Prediction> GetAll()
-    {
-      string sql = ConfigReader.ReadAllCommand;
-      var queryResult = dbConnection.Query<Prediction>(sql);
-
-      return queryResult.ToList();
+      conn = new SqlConnection(ConfigReader.ConnectionString);
     }
 
     public bool Add(Prediction prediction)
@@ -29,9 +20,11 @@ namespace BingoGen
       var result = false;
       try
       {
-        string sql = ConfigReader.InsertCommand;
+        string sql =
+        @"INSERT INTO [dbo].[Predictions] (Prediction, Difficulty, ImageUri, CreatedBy, fk_BoardId, fk_CardId) " +
+          "VALUES (@predictionText, @difficulty, @imageUri, @createdBy, @boardId, @cardId)";
 
-        var count = dbConnection.Execute(sql, prediction);
+        var count = conn.Execute(sql, prediction);
         result = count > 0;
       }
       catch (Exception ex)
@@ -42,25 +35,7 @@ namespace BingoGen
       return result;
     }
 
-    public Prediction GetById(int id)
-    {
-      Prediction prediction = null;
-      string sql = ConfigReader.ReadOneCommand;
-      var queryResult = dbConnection.Query<Prediction>(sql, new { Id = id });
-
-      if (queryResult != null)
-      {
-        prediction = queryResult.FirstOrDefault();
-      }
-      return prediction;
-    }
-
-    public bool Update(Prediction prediction)
-    {
-      throw new NotImplementedException();
-    }
-
-    public bool Delete(int id)
+    public Prediction AddWithObjectReturn(Prediction prediction)
     {
       throw new NotImplementedException();
     }

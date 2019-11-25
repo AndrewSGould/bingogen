@@ -1,5 +1,4 @@
 using System.IO;
-using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -14,20 +13,27 @@ namespace BingoGen.Controllers
   {
     private readonly ILogger<PredictionController> _logger;
     IRepository<Prediction> predictionsRepository = null;
+    IRepository<Board> boardsRepository = null;
+    ShortenerService shortenerService = null;
 
     public PredictionController(ILogger<PredictionController> logger)
     {
       _logger = logger;
       predictionsRepository = new PredictionsRepository();
+      boardsRepository = new BoardsRepository();
+      shortenerService = new ShortenerService();
     }
 
     [HttpGet("/get")]
-    public IActionResult Get()
+    public Board Get()
     {
-      _logger.LogInformation("Testing 1, 2, 3...");
-      IList<Prediction> prediction = predictionsRepository.GetAll();
+      var test = boardsRepository.AddWithObjectReturn(new Board
+      {
+        Seed = "CatDog",
+        CreatedBy = "TestUser"
+      });
 
-      return Ok(prediction);
+      return test;
     }
 
     [HttpPost("/imageupload")]
@@ -35,16 +41,28 @@ namespace BingoGen.Controllers
     {
       // TODO: Santitize input from client
 
+      // TODO: check if board does not exist, do not hardcode new board
+      var board = boardsRepository.AddWithObjectReturn(new Board
+      {
+        Seed = shortenerService.GenerateUniqueShortPhrase(),
+        CreatedBy = "Test User" // TODO: Implement this
+      });
+
       var prediction = new Prediction
       {
         PredictionText = predictionText,
         Difficulty = difficulty,
         ImageUri = Upload(image),
-        CreatedBy = "" // TODO: implement this
+        CreatedBy = "Test User", // TODO: implement this
+        BoardId = board.Id,
+        CardId = null // explicit, not assigned to a card until a card is generated with it
       };
 
       if (predictionsRepository.Add(prediction))
         return Ok(prediction);
+
+      // on this create page (without a board id) first, create the board
+      // then, add the prediction to the board
 
       return BadRequest();
     }

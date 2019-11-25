@@ -48,8 +48,8 @@ export class Prediction extends Component {
     return post(url, formData, config)
       .then(response => {
         this.setState({
-          uploading: false,
-          currentCount: currentCount++
+          uploading: false
+          //currentCount: currentCount++
         });
       })
       .catch(error => {
